@@ -99,3 +99,66 @@ export const AMBIENT_CONFIG = {
     assert report.is_valid
     assert session.source_format == "legacy_js"
     assert "legacy" in session.source_note.lower()
+
+
+def test_import_biome_scoped_events_music_is_non_empty_and_editable(tmp_path: Path) -> None:
+    from ambient_audio_tool.gui.workspace import WorkspaceSession
+
+    legacy_js = tmp_path / "SoundEventDefinitions.js"
+    legacy_js.write_text(
+        """
+export const AMBIENT_CONFIG = {
+  ambient_sound_definitions: {
+    "mco_tdew:devonian_wetlands": {
+      events: {
+        music: [
+          {
+            weight: 70,
+            filter: { test: "is_day", operator: "==", value: true },
+            source_sound: {
+              event_name: "wetlands_day_theme",
+              length_seconds: 32,
+              min_delay_seconds: 4,
+              max_delay_seconds: 9
+            }
+          }
+        ]
+      }
+    },
+    "minecraft:stone_beach": {
+      events: {
+        music: [
+          {
+            weight: 55,
+            source_sound: {
+              event_name: "stone_beach_theme",
+              length_seconds: 21,
+              min_delay_seconds: 3,
+              max_delay_seconds: 7
+            }
+          }
+        ]
+      }
+    }
+  }
+};
+""".strip(),
+        encoding="utf-8",
+    )
+
+    project, report, meta = load_project_with_report_and_meta(legacy_js)
+    assert project is not None, report.to_text()
+    assert report.is_valid
+    assert meta["source_format"] == "legacy_js"
+    assert len(project.audio_assets) >= 2
+    assert len(project.conditions) >= 2
+    assert len(project.rules) >= 2
+    assert all(rule.channel.value == "music" for rule in project.rules)
+
+    session = WorkspaceSession()
+    workspace_report = session.load_project(legacy_js)
+    assert workspace_report.is_valid
+    assert session.has_project
+    view = session.build_view_data()
+    assert view["metadata"]["assets"] >= 2
+    assert view["metadata"]["rules"] >= 2

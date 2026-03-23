@@ -69,6 +69,15 @@ def import_ambient_config(
             warnings.append(f"Scope '{scope_key}' is not an object and was skipped.")
             continue
 
+        events_value = scope_value.get("events")
+        if events_value is not None and not isinstance(events_value, dict):
+            warnings.append(f"{scope_key}.events is not an object and was ignored.")
+            events_groups: dict[str, Any] = {}
+        elif isinstance(events_value, dict):
+            events_groups = events_value
+        else:
+            events_groups = {}
+
         biome_node: dict[str, Any] | None = None
         if scope_key != "global":
             biome_node = {
@@ -83,13 +92,23 @@ def import_ambient_config(
         )
 
         for legacy_group, channel in GROUP_TO_CHANNEL.items():
-            if legacy_group not in scope_value:
-                continue
-            entries = _coerce_legacy_entries(
-                scope_value.get(legacy_group),
-                warnings,
-                context=f"{scope_key}.{legacy_group}",
-            )
+            entries: list[dict[str, Any]] = []
+            if legacy_group in scope_value:
+                entries.extend(
+                    _coerce_legacy_entries(
+                        scope_value.get(legacy_group),
+                        warnings,
+                        context=f"{scope_key}.{legacy_group}",
+                    )
+                )
+            if legacy_group in events_groups:
+                entries.extend(
+                    _coerce_legacy_entries(
+                        events_groups.get(legacy_group),
+                        warnings,
+                        context=f"{scope_key}.events.{legacy_group}",
+                    )
+                )
             if not entries:
                 continue
 
