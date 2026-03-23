@@ -1,0 +1,72 @@
+{
+  "project_id": "example_low_health_alert",
+  "project_name": "Low Health Alert",
+  "version": "1.0",
+  "audio_assets": [
+    {
+      "id": "asset_alert_low_health",
+      "path": "assets/audio/alerts/low_health_01.ogg",
+      "duration_ms": 1700
+    }
+  ],
+  "biome_groups": [],
+  "custom_events": [],
+  "conditions": [
+    {
+      "id": "expr_low_health_combat",
+      "root": {
+        "op": "ALL",
+        "nodes": [
+          {
+            "op": "PRED",
+            "predicate": {
+              "type": "player_health_range",
+              "min_health": 0,
+              "max_health": 6
+            }
+          },
+          {
+            "op": "PRED",
+            "predicate": {
+              "type": "danger_state_is",
+              "state": "combat"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "rules": [
+    {
+      "id": "rule_low_health_alert",
+      "name": "Critical health in combat",
+      "enabled": true,
+      "channel": "event_alert",
+      "condition_ref": "expr_low_health_combat",
+      "asset_ids": [
+        "asset_alert_low_health"
+      ],
+      "priority": {
+        "base_priority": 95
+      },
+      "randomness": {
+        "probability": 1.0,
+        "weight": 5,
+        "no_repeat_window": 1,
+        "jitter_ms": 0
+      },
+      "cooldown": {
+        "rule_cooldown_ms": 4000,
+        "asset_cooldown_ms": 5000,
+        "min_delay_ms": 0,
+        "max_delay_ms": 0
+      },
+      "conflict": {
+        "scope": "global",
+        "max_concurrent": 1,
+        "tie_breaker": "priority_then_weight",
+        "can_preempt_lower_priority": true
+      }
+    }
+  ]
+}

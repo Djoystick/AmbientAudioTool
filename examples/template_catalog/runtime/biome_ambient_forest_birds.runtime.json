@@ -1,0 +1,64 @@
+{
+  "runtime_rules": [
+    {
+      "id": "rule_biome_ambient_forest",
+      "name": "Forest birds ambience",
+      "enabled": true,
+      "channel": "ambient_noise",
+      "condition_ref": "expr_biome_ambient_forest",
+      "asset_ids": [
+        "asset_ambient_forest_birds_01"
+      ],
+      "priority": {
+        "base_priority": 35,
+        "contextual_boosts": {},
+        "suppression_threshold": 0
+      },
+      "randomness": {
+        "probability": 1.0,
+        "weight": 1,
+        "no_repeat_window": 0,
+        "jitter_ms": 600,
+        "rotation_pool": null
+      },
+      "cooldown": {
+        "rule_cooldown_ms": 5000,
+        "asset_cooldown_ms": 10000,
+        "min_delay_ms": 2500,
+        "max_delay_ms": 7000
+      },
+      "conflict": {
+        "scope": "channel",
+        "max_concurrent": 2,
+        "tie_breaker": "priority_then_oldest",
+        "can_preempt_lower_priority": false
+      },
+      "referenced_condition_ids": [
+        "expr_biome_ambient_forest"
+      ],
+      "resolved_asset_count": 1,
+      "export_order": 1
+    }
+  ],
+  "runtime_conditions": [
+    {
+      "id": "expr_biome_ambient_forest",
+      "root": {
+        "op": "PRED",
+        "predicate": {
+          "type": "biome_is",
+          "biome": "minecraft:forest"
+        }
+      },
+      "direct_ref_ids": [],
+      "transitive_ref_ids": []
+    }
+  ],
+  "runtime_assets": [
+    {
+      "id": "asset_ambient_forest_birds_01",
+      "path": "assets/audio/ambient/forest_birds_01.ogg",
+      "duration_ms": 18000
+    }
+  ]
+}

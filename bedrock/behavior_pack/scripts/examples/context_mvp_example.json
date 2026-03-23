@@ -1,0 +1,9 @@
+{
+  "biome": "minecraft:forest",
+  "time": 12,
+  "weather": "clear",
+  "player_health": 6,
+  "is_underwater": false,
+  "timestamp_ms": 1000
+}
+

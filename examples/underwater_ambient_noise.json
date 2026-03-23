@@ -1,0 +1,80 @@
+{
+  "project_id": "example_underwater_noise",
+  "project_name": "Underwater Ambient Noise",
+  "version": "1.0",
+  "audio_assets": [
+    {
+      "id": "asset_ambient_underwater_01",
+      "path": "assets/audio/ambient/underwater_01.ogg",
+      "duration_ms": 22000
+    }
+  ],
+  "biome_groups": [
+    {
+      "id": "group_oceanic",
+      "name": "Oceanic Biomes",
+      "biomes": [
+        "minecraft:ocean",
+        "minecraft:deep_ocean",
+        "minecraft:warm_ocean"
+      ]
+    }
+  ],
+  "custom_events": [],
+  "conditions": [
+    {
+      "id": "expr_underwater_oceanic",
+      "root": {
+        "op": "ALL",
+        "nodes": [
+          {
+            "op": "PRED",
+            "predicate": {
+              "type": "is_underwater",
+              "value": true
+            }
+          },
+          {
+            "op": "PRED",
+            "predicate": {
+              "type": "biome_in_group",
+              "group_id": "group_oceanic"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "rules": [
+    {
+      "id": "rule_underwater_noise_loop",
+      "name": "Underwater ambient texture",
+      "enabled": true,
+      "channel": "ambient_noise",
+      "condition_ref": "expr_underwater_oceanic",
+      "asset_ids": [
+        "asset_ambient_underwater_01"
+      ],
+      "priority": {
+        "base_priority": 40
+      },
+      "randomness": {
+        "probability": 1.0,
+        "weight": 1,
+        "jitter_ms": 500
+      },
+      "cooldown": {
+        "rule_cooldown_ms": 0,
+        "asset_cooldown_ms": 10000,
+        "min_delay_ms": 3000,
+        "max_delay_ms": 8000
+      },
+      "conflict": {
+        "scope": "channel",
+        "max_concurrent": 2,
+        "tie_breaker": "priority_then_oldest",
+        "can_preempt_lower_priority": false
+      }
+    }
+  ]
+}

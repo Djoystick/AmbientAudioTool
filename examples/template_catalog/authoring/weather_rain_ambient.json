@@ -1,0 +1,58 @@
+{
+  "project_id": "template_weather_rain_ambient",
+  "project_name": "Template - Weather Rain Ambient",
+  "version": "1.0",
+  "audio_assets": [
+    {
+      "id": "asset_ambient_rain_layer_01",
+      "path": "assets/audio/ambient/rain_layer_01.ogg",
+      "duration_ms": 20000
+    }
+  ],
+  "biome_groups": [],
+  "custom_events": [],
+  "conditions": [
+    {
+      "id": "expr_weather_rain",
+      "root": {
+        "op": "PRED",
+        "predicate": {
+          "type": "weather_is",
+          "weather": "rain"
+        }
+      }
+    }
+  ],
+  "rules": [
+    {
+      "id": "rule_weather_rain_ambient",
+      "name": "Rain ambience layer",
+      "enabled": true,
+      "channel": "ambient_noise",
+      "condition_ref": "expr_weather_rain",
+      "asset_ids": [
+        "asset_ambient_rain_layer_01"
+      ],
+      "priority": {
+        "base_priority": 42
+      },
+      "randomness": {
+        "probability": 1.0,
+        "weight": 2,
+        "jitter_ms": 400
+      },
+      "cooldown": {
+        "rule_cooldown_ms": 3000,
+        "asset_cooldown_ms": 7000,
+        "min_delay_ms": 2000,
+        "max_delay_ms": 6000
+      },
+      "conflict": {
+        "scope": "channel",
+        "max_concurrent": 2,
+        "tie_breaker": "priority_then_oldest",
+        "can_preempt_lower_priority": false
+      }
+    }
+  ]
+}

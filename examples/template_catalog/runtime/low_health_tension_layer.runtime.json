@@ -1,0 +1,65 @@
+{
+  "runtime_rules": [
+    {
+      "id": "rule_low_health_tension",
+      "name": "Low health tension loop",
+      "enabled": true,
+      "channel": "music",
+      "condition_ref": "expr_low_health_tension",
+      "asset_ids": [
+        "asset_tension_low_health_01"
+      ],
+      "priority": {
+        "base_priority": 88,
+        "contextual_boosts": {},
+        "suppression_threshold": 0
+      },
+      "randomness": {
+        "probability": 1.0,
+        "weight": 3,
+        "no_repeat_window": 0,
+        "jitter_ms": 0,
+        "rotation_pool": null
+      },
+      "cooldown": {
+        "rule_cooldown_ms": 5000,
+        "asset_cooldown_ms": 7000,
+        "min_delay_ms": 0,
+        "max_delay_ms": 0
+      },
+      "conflict": {
+        "scope": "channel",
+        "max_concurrent": 1,
+        "tie_breaker": "priority_then_weight",
+        "can_preempt_lower_priority": true
+      },
+      "referenced_condition_ids": [
+        "expr_low_health_tension"
+      ],
+      "resolved_asset_count": 1,
+      "export_order": 1
+    }
+  ],
+  "runtime_conditions": [
+    {
+      "id": "expr_low_health_tension",
+      "root": {
+        "op": "PRED",
+        "predicate": {
+          "type": "player_health_range",
+          "min_health": 0,
+          "max_health": 8
+        }
+      },
+      "direct_ref_ids": [],
+      "transitive_ref_ids": []
+    }
+  ],
+  "runtime_assets": [
+    {
+      "id": "asset_tension_low_health_01",
+      "path": "assets/audio/music/tension_low_health_01.ogg",
+      "duration_ms": 8000
+    }
+  ]
+}

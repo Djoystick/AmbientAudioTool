@@ -1,0 +1,17 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Ambient Audio Tool Bridge RP (Scaffold)",
+    "description": "Phase 6 scaffold for resource-side sound mapping. Non-final.",
+    "uuid": "d5bfe9d9-6e5a-4a30-9ef8-8261ed5d2211",
+    "version": [0, 1, 0],
+    "min_engine_version": [1, 20, 0]
+  },
+  "modules": [
+    {
+      "type": "resources",
+      "uuid": "15a9efeb-6f4d-4984-9365-4d5aa5d38212",
+      "version": [0, 1, 0]
+    }
+  ]
+}

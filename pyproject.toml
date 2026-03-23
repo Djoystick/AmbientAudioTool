@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ambient-audio-tool"
+version = "0.1.0"
+description = "Authoring and validation core for Minecraft Bedrock ambient audio projects."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "pydantic>=2.7,<3.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+]
+gui = [
+  "PySide6>=6.7",
+]
+build = [
+  "pyinstaller>=6.0",
+]
+
+[project.scripts]
+ambient-audio-tool = "ambient_audio_tool.cli.main:entrypoint"
+ambient-audio-tool-gui = "ambient_audio_tool.gui.app:entrypoint"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,58 @@
+{
+  "project_id": "template_biome_ambient_forest_birds",
+  "project_name": "Template - Biome Ambient Forest Birds",
+  "version": "1.0",
+  "audio_assets": [
+    {
+      "id": "asset_ambient_forest_birds_01",
+      "path": "assets/audio/ambient/forest_birds_01.ogg",
+      "duration_ms": 18000
+    }
+  ],
+  "biome_groups": [],
+  "custom_events": [],
+  "conditions": [
+    {
+      "id": "expr_biome_ambient_forest",
+      "root": {
+        "op": "PRED",
+        "predicate": {
+          "type": "biome_is",
+          "biome": "minecraft:forest"
+        }
+      }
+    }
+  ],
+  "rules": [
+    {
+      "id": "rule_biome_ambient_forest",
+      "name": "Forest birds ambience",
+      "enabled": true,
+      "channel": "ambient_noise",
+      "condition_ref": "expr_biome_ambient_forest",
+      "asset_ids": [
+        "asset_ambient_forest_birds_01"
+      ],
+      "priority": {
+        "base_priority": 35
+      },
+      "randomness": {
+        "probability": 1.0,
+        "weight": 1,
+        "jitter_ms": 600
+      },
+      "cooldown": {
+        "rule_cooldown_ms": 5000,
+        "asset_cooldown_ms": 10000,
+        "min_delay_ms": 2500,
+        "max_delay_ms": 7000
+      },
+      "conflict": {
+        "scope": "channel",
+        "max_concurrent": 2,
+        "tie_breaker": "priority_then_oldest",
+        "can_preempt_lower_priority": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "project_id": "example_biome_music_ref",
+  "project_name": "Biome Music with Reusable REF",
+  "version": "1.0",
+  "audio_assets": [
+    {
+      "id": "asset_music_forest_day_01",
+      "path": "assets/audio/music/forest_day_01.ogg",
+      "duration_ms": 121000
+    },
+    {
+      "id": "asset_music_forest_day_02",
+      "path": "assets/audio/music/forest_day_02.ogg",
+      "duration_ms": 118000
+    }
+  ],
+  "biome_groups": [],
+  "custom_events": [],
+  "conditions": [
+    {
+      "id": "expr_is_forest",
+      "root": {
+        "op": "PRED",
+        "predicate": {
+          "type": "biome_is",
+          "biome": "minecraft:forest"
+        }
+      }
+    },
+    {
+      "id": "expr_daytime_clear",
+      "root": {
+        "op": "ALL",
+        "nodes": [
+          {
+            "op": "PRED",
+            "predicate": {
+              "type": "time_between",
+              "start_hour": 6,
+              "end_hour": 17
+            }
+          },
+          {
+            "op": "PRED",
+            "predicate": {
+              "type": "weather_is",
+              "weather": "clear"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "expr_forest_day_music",
+      "root": {
+        "op": "ALL",
+        "nodes": [
+          {
+            "op": "REF",
+            "ref_id": "expr_is_forest"
+          },
+          {
+            "op": "REF",
+            "ref_id": "expr_daytime_clear"
+          }
+        ]
+      }
+    }
+  ],
+  "rules": [
+    {
+      "id": "rule_forest_day_music",
+      "name": "Forest daytime music",
+      "enabled": true,
+      "channel": "music",
+      "condition_ref": "expr_DOES_NOT_EXIST",
+      "asset_ids": [
+        "asset_music_forest_day_01",
+        "asset_music_forest_day_02"
+      ],
+      "priority": {
+        "base_priority": 50
+      },
+      "randomness": {
+        "probability": 0.8,
+        "weight": 3,
+        "no_repeat_window": 2,
+        "jitter_ms": 1500
+      },
+      "cooldown": {
+        "rule_cooldown_ms": 60000,
+        "asset_cooldown_ms": 90000,
+        "min_delay_ms": 5000,
+        "max_delay_ms": 12000
+      },
+      "conflict": {
+        "scope": "channel",
+        "max_concurrent": 1,
+        "tie_breaker": "priority_then_weight",
+        "can_preempt_lower_priority": false
+      }
+    }
+  ]
+}

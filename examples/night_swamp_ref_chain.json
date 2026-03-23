@@ -1,0 +1,94 @@
+{
+  "project_id": "example_night_swamp_ref_chain",
+  "project_name": "Night Swamp with REF Chain",
+  "version": "1.0",
+  "audio_assets": [
+    {
+      "id": "asset_ambient_swamp_night_01",
+      "path": "assets/audio/ambient/swamp_night_01.ogg",
+      "duration_ms": 18000
+    }
+  ],
+  "biome_groups": [
+    {
+      "id": "group_swampy",
+      "name": "Swamp Biomes",
+      "biomes": [
+        "minecraft:swamp",
+        "minecraft:mangrove_swamp"
+      ]
+    }
+  ],
+  "custom_events": [],
+  "conditions": [
+    {
+      "id": "expr_swamp_group",
+      "root": {
+        "op": "PRED",
+        "predicate": {
+          "type": "biome_in_group",
+          "group_id": "group_swampy"
+        }
+      }
+    },
+    {
+      "id": "expr_night_window",
+      "root": {
+        "op": "PRED",
+        "predicate": {
+          "type": "time_between",
+          "start_hour": 18,
+          "end_hour": 5
+        }
+      }
+    },
+    {
+      "id": "expr_swamp_night",
+      "root": {
+        "op": "ALL",
+        "nodes": [
+          {
+            "op": "REF",
+            "ref_id": "expr_swamp_group"
+          },
+          {
+            "op": "REF",
+            "ref_id": "expr_night_window"
+          }
+        ]
+      }
+    }
+  ],
+  "rules": [
+    {
+      "id": "rule_swamp_night_ambient",
+      "name": "Swamp night ambience",
+      "enabled": true,
+      "channel": "ambient_noise",
+      "condition_ref": "expr_swamp_night",
+      "asset_ids": [
+        "asset_ambient_swamp_night_01"
+      ],
+      "priority": {
+        "base_priority": 45
+      },
+      "randomness": {
+        "probability": 0.9,
+        "weight": 2,
+        "rotation_pool": "pool_swamp_night"
+      },
+      "cooldown": {
+        "rule_cooldown_ms": 5000,
+        "asset_cooldown_ms": 15000,
+        "min_delay_ms": 2000,
+        "max_delay_ms": 7000
+      },
+      "conflict": {
+        "scope": "channel",
+        "max_concurrent": 2,
+        "tie_breaker": "priority_then_oldest",
+        "can_preempt_lower_priority": false
+      }
+    }
+  ]
+}

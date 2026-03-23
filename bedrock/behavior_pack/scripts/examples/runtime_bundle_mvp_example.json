@@ -1,0 +1,113 @@
+{
+  "runtime_rules": [
+    {
+      "id": "rule_music_forest_day",
+      "name": "Forest Day Music",
+      "enabled": true,
+      "channel": "music",
+      "condition_ref": "expr_forest_day",
+      "asset_ids": ["asset_music_forest_day_01"],
+      "priority": {
+        "base_priority": 50
+      },
+      "randomness": {
+        "probability": 1.0,
+        "weight": 3,
+        "no_repeat_window": 0
+      },
+      "cooldown": {
+        "rule_cooldown_ms": 0,
+        "asset_cooldown_ms": 0
+      },
+      "conflict": {
+        "max_concurrent": 1,
+        "tie_breaker": "priority_then_weight",
+        "can_preempt_lower_priority": false
+      },
+      "referenced_condition_ids": ["expr_forest_day"],
+      "resolved_asset_count": 1,
+      "export_order": 1
+    },
+    {
+      "id": "rule_low_health_alert",
+      "name": "Low Health Alert",
+      "enabled": true,
+      "channel": "event_alert",
+      "condition_ref": "expr_low_health",
+      "asset_ids": ["asset_low_health_alert"],
+      "priority": {
+        "base_priority": 90
+      },
+      "randomness": {
+        "probability": 1.0,
+        "weight": 1,
+        "no_repeat_window": 0
+      },
+      "cooldown": {
+        "rule_cooldown_ms": 0,
+        "asset_cooldown_ms": 0
+      },
+      "conflict": {
+        "max_concurrent": 1,
+        "tie_breaker": "priority_then_weight",
+        "can_preempt_lower_priority": true
+      },
+      "referenced_condition_ids": ["expr_low_health"],
+      "resolved_asset_count": 1,
+      "export_order": 2
+    }
+  ],
+  "runtime_conditions": [
+    {
+      "id": "expr_forest_day",
+      "root": {
+        "op": "ALL",
+        "nodes": [
+          {
+            "op": "PRED",
+            "predicate": {
+              "type": "biome_is",
+              "biome": "minecraft:forest"
+            }
+          },
+          {
+            "op": "PRED",
+            "predicate": {
+              "type": "time_between",
+              "start_hour": 6,
+              "end_hour": 17
+            }
+          }
+        ]
+      },
+      "direct_ref_ids": [],
+      "transitive_ref_ids": []
+    },
+    {
+      "id": "expr_low_health",
+      "root": {
+        "op": "PRED",
+        "predicate": {
+          "type": "player_health_range",
+          "min_health": 0,
+          "max_health": 8
+        }
+      },
+      "direct_ref_ids": [],
+      "transitive_ref_ids": []
+    }
+  ],
+  "runtime_assets": [
+    {
+      "id": "asset_music_forest_day_01",
+      "path": "assets/audio/music/forest_day_01.ogg",
+      "duration_ms": 120000
+    },
+    {
+      "id": "asset_low_health_alert",
+      "path": "assets/audio/events/low_health_alert.ogg",
+      "duration_ms": 1500
+    }
+  ]
+}
+

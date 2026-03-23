@@ -1,0 +1,18 @@
+{
+  "timestamp_ms": 1000,
+  "selections": [
+    {
+      "channel": "event_alert",
+      "selected_rule_id": "rule_low_health_alert",
+      "selected_asset_id": "asset_low_health_alert",
+      "reason": "selected"
+    },
+    {
+      "channel": "music",
+      "selected_rule_id": "rule_music_forest_day",
+      "selected_asset_id": "asset_music_forest_day_01",
+      "reason": "selected"
+    }
+  ]
+}
+

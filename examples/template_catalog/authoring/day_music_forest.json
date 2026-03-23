@@ -1,0 +1,72 @@
+{
+  "project_id": "template_day_music_forest",
+  "project_name": "Template - Day Music Forest",
+  "version": "1.0",
+  "audio_assets": [
+    {
+      "id": "asset_day_music_forest_01",
+      "path": "assets/audio/music/day_forest_01.ogg",
+      "duration_ms": 120000
+    }
+  ],
+  "biome_groups": [],
+  "custom_events": [],
+  "conditions": [
+    {
+      "id": "expr_day_music_forest",
+      "root": {
+        "op": "ALL",
+        "nodes": [
+          {
+            "op": "PRED",
+            "predicate": {
+              "type": "biome_is",
+              "biome": "minecraft:forest"
+            }
+          },
+          {
+            "op": "PRED",
+            "predicate": {
+              "type": "time_between",
+              "start_hour": 6,
+              "end_hour": 17
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "rules": [
+    {
+      "id": "rule_day_music_forest",
+      "name": "Day music in forest",
+      "enabled": true,
+      "channel": "music",
+      "condition_ref": "expr_day_music_forest",
+      "asset_ids": [
+        "asset_day_music_forest_01"
+      ],
+      "priority": {
+        "base_priority": 45
+      },
+      "randomness": {
+        "probability": 1.0,
+        "weight": 2,
+        "no_repeat_window": 1,
+        "jitter_ms": 500
+      },
+      "cooldown": {
+        "rule_cooldown_ms": 30000,
+        "asset_cooldown_ms": 45000,
+        "min_delay_ms": 5000,
+        "max_delay_ms": 10000
+      },
+      "conflict": {
+        "scope": "channel",
+        "max_concurrent": 1,
+        "tie_breaker": "priority_then_weight",
+        "can_preempt_lower_priority": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "auto_bind": true,
+  "tick_interval_ticks": 20,
+  "single_player_only": false,
+  "notes": [
+    "Use conservative defaults first.",
+    "Override collectContext/dispatch only when Bedrock API behavior is verified for your version."
+  ]
+}
+

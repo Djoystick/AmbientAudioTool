@@ -1,0 +1,90 @@
+{
+  "runtime_rules": [
+    {
+      "id": "rule_night_music_swamp",
+      "name": "Night music in swamp",
+      "enabled": true,
+      "channel": "music",
+      "condition_ref": "expr_night_music_swamp",
+      "asset_ids": [
+        "asset_night_music_swamp_01"
+      ],
+      "priority": {
+        "base_priority": 55,
+        "contextual_boosts": {},
+        "suppression_threshold": 0
+      },
+      "randomness": {
+        "probability": 1.0,
+        "weight": 2,
+        "no_repeat_window": 1,
+        "jitter_ms": 700,
+        "rotation_pool": null
+      },
+      "cooldown": {
+        "rule_cooldown_ms": 30000,
+        "asset_cooldown_ms": 45000,
+        "min_delay_ms": 4000,
+        "max_delay_ms": 9000
+      },
+      "conflict": {
+        "scope": "channel",
+        "max_concurrent": 1,
+        "tie_breaker": "priority_then_weight",
+        "can_preempt_lower_priority": false
+      },
+      "referenced_condition_ids": [
+        "expr_night_music_swamp"
+      ],
+      "resolved_asset_count": 1,
+      "export_order": 1
+    }
+  ],
+  "runtime_conditions": [
+    {
+      "id": "expr_night_music_swamp",
+      "root": {
+        "op": "ALL",
+        "nodes": [
+          {
+            "op": "PRED",
+            "predicate": {
+              "type": "biome_is",
+              "biome": "minecraft:swamp"
+            }
+          },
+          {
+            "op": "ANY",
+            "nodes": [
+              {
+                "op": "PRED",
+                "predicate": {
+                  "type": "time_between",
+                  "start_hour": 18,
+                  "end_hour": 23
+                }
+              },
+              {
+                "op": "PRED",
+                "predicate": {
+                  "type": "time_between",
+                  "start_hour": 0,
+                  "end_hour": 5
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "direct_ref_ids": [],
+      "transitive_ref_ids": []
+    }
+  ],
+  "runtime_assets": [
+    {
+      "id": "asset_night_music_swamp_01",
+      "path": "assets/audio/music/night_swamp_01.ogg",
+      "duration_ms": 110000
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "runtime_rules": [
+    {
+      "id": "rule_context_enter_cave_oneshot",
+      "name": "One-shot cave entry cue",
+      "enabled": true,
+      "channel": "context_oneshot",
+      "condition_ref": "expr_context_enter_cave",
+      "asset_ids": [
+        "asset_context_enter_cave_01"
+      ],
+      "priority": {
+        "base_priority": 70,
+        "contextual_boosts": {},
+        "suppression_threshold": 0
+      },
+      "randomness": {
+        "probability": 1.0,
+        "weight": 1,
+        "no_repeat_window": 0,
+        "jitter_ms": 0,
+        "rotation_pool": null
+      },
+      "cooldown": {
+        "rule_cooldown_ms": 3000,
+        "asset_cooldown_ms": 3000,
+        "min_delay_ms": 0,
+        "max_delay_ms": 0
+      },
+      "conflict": {
+        "scope": "channel",
+        "max_concurrent": 1,
+        "tie_breaker": "priority_then_weight",
+        "can_preempt_lower_priority": true
+      },
+      "referenced_condition_ids": [
+        "expr_context_enter_cave"
+      ],
+      "resolved_asset_count": 1,
+      "export_order": 1
+    }
+  ],
+  "runtime_conditions": [
+    {
+      "id": "expr_context_enter_cave",
+      "root": {
+        "op": "PRED",
+        "predicate": {
+          "type": "custom_event",
+          "event_id": "evt_enter_cave"
+        }
+      },
+      "direct_ref_ids": [],
+      "transitive_ref_ids": []
+    }
+  ],
+  "runtime_assets": [
+    {
+      "id": "asset_context_enter_cave_01",
+      "path": "assets/audio/context/enter_cave_01.ogg",
+      "duration_ms": 1800
+    }
+  ]
+}

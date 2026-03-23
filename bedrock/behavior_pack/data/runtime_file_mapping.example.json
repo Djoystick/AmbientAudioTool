@@ -1,0 +1,36 @@
+{
+  "contract_version": "phase6_mvp",
+  "source_export_folder": "out/<project_export>/",
+  "target_behavior_pack_folder": "bedrock/behavior_pack/data/runtime/",
+  "file_map": [
+    {
+      "source": "runtime_rules.json",
+      "target": "runtime_rules.json",
+      "consumed_by": "script runtime evaluator",
+      "required": true
+    },
+    {
+      "source": "runtime_conditions.json",
+      "target": "runtime_conditions.json",
+      "consumed_by": "condition resolver",
+      "required": true
+    },
+    {
+      "source": "runtime_assets.json",
+      "target": "runtime_assets.json",
+      "consumed_by": "asset lookup / dispatch mapping",
+      "required": true
+    },
+    {
+      "source": "manifest.json",
+      "target": "manifest.json",
+      "consumed_by": "optional version + diagnostics check",
+      "required": false
+    }
+  ],
+  "notes": [
+    "Exporter output format remains unchanged in Phase 6/Runtime MVP pass.",
+    "Bedrock script runtime should treat this folder as read-only runtime config.",
+    "MVP bridge consumes runtime data as runtime_rules/runtime_conditions/runtime_assets arrays."
+  ]
+}

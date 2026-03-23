@@ -1,0 +1,41 @@
+{
+  "current_time_ms": 124000,
+  "rule_last_played_at": {
+    "rule_forest_day_music": 121000
+  },
+  "asset_last_played_at": {
+    "asset_music_forest_day_01": 121000
+  },
+  "recent_asset_history": [
+    "asset_music_forest_day_01",
+    "asset_ambient_forest_wind_01"
+  ],
+  "rule_asset_history": {
+    "rule_forest_day_music": [
+      "asset_music_forest_day_02",
+      "asset_music_forest_day_01"
+    ]
+  },
+  "active_channel_selections": {
+    "music": [
+      {
+        "channel": "music",
+        "selected_rule_id": "rule_forest_day_music",
+        "selected_asset_id": "asset_music_forest_day_01",
+        "base_priority": 50,
+        "can_preempt_lower_priority": false,
+        "max_concurrent": 1
+      }
+    ],
+    "ambient_noise": [
+      {
+        "channel": "ambient_noise",
+        "selected_rule_id": "rule_forest_day_ambient",
+        "selected_asset_id": "asset_ambient_forest_wind_01",
+        "base_priority": 40,
+        "can_preempt_lower_priority": false,
+        "max_concurrent": 2
+      }
+    ]
+  }
+}

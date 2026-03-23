@@ -1,0 +1,61 @@
+{
+  "project_id": "example_custom_event",
+  "project_name": "Custom Event Trigger Example",
+  "version": "1.0",
+  "audio_assets": [
+    {
+      "id": "asset_event_ruin_discovery",
+      "path": "assets/audio/events/ruin_discovery_01.ogg",
+      "duration_ms": 4100
+    }
+  ],
+  "biome_groups": [],
+  "custom_events": [
+    {
+      "id": "event_ruin_discovered",
+      "name": "Ruin Discovered",
+      "description": "Script emits this when player finds a ruin."
+    }
+  ],
+  "conditions": [
+    {
+      "id": "expr_ruin_discovered",
+      "root": {
+        "op": "PRED",
+        "predicate": {
+          "type": "custom_event",
+          "event_id": "event_ruin_discovered"
+        }
+      }
+    }
+  ],
+  "rules": [
+    {
+      "id": "rule_ruin_discovery_cue",
+      "name": "Ruin discovery one-shot",
+      "enabled": true,
+      "channel": "context_oneshot",
+      "condition_ref": "expr_ruin_discovered",
+      "asset_ids": [
+        "asset_event_ruin_discovery"
+      ],
+      "priority": {
+        "base_priority": 70
+      },
+      "randomness": {
+        "probability": 1.0,
+        "weight": 2
+      },
+      "cooldown": {
+        "rule_cooldown_ms": 10000,
+        "asset_cooldown_ms": 10000
+      },
+      "conflict": {
+        "scope": "channel",
+        "max_concurrent": 1,
+        "tie_breaker": "stable_rule_id",
+        "can_preempt_lower_priority": false
+      }
+    }
+  ]
+}
